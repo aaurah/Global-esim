@@ -1,0 +1,330 @@
+MASTER REPLIT AGENT PROMPT
+
+Build Global eSIM Privacy Pro — Advanced Independent Telecom Platform
+
+Build a complete, modern, production-oriented, full-stack global eSIM business platform inspired by the functionality of Silent Link, but with entirely original branding, design, architecture, and code.
+
+I want to own and operate my own independent eSIM business, offering privacy-focused prepaid mobile connectivity, cryptocurrency payments, eSIM QR activation, international mobile data, optional real phone numbers, voice, SMS, and cryptocurrency-based data recharges.
+
+Do not create a basic landing page or a nonfunctional mockup. Build a working web application with a customer storefront, customer portal, advanced administrator dashboard, database, backend API, payment integration architecture, and real telecom supplier API integration capabilities.
+
+1. Design and branding
+
+Create a premium futuristic telecom platform.
+
+- Luxury dark navy and black backgrounds.
+- Electric blue, cyan, and subtle violet accents.
+- Glassmorphism panels, elegant typography, and smooth animations.
+- Fully responsive desktop, tablet, and mobile design.
+- Professional dashboard with sidebar navigation.
+- Light and dark mode.
+- Original brand identity and logo.
+- Excellent accessibility and performance.
+
+Use React, TypeScript, Tailwind CSS, and a modern component library. Build a Node.js backend with PostgreSQL and Prisma or Drizzle ORM.
+
+2. Customer storefront
+
+Create these pages:
+
+- Homepage with global eSIM coverage search.
+- Country-specific eSIM packages.
+- Regional and worldwide plans.
+- Data-only and data/voice/SMS plans.
+- Carrier coverage and supported networks.
+- Device compatibility checker.
+- Pricing comparison.
+- Cryptocurrency checkout.
+- eSIM activation and installation guide.
+- Customer dashboard.
+- Data usage and expiry tracking.
+- Recharge and top-up page.
+- Order lookup using a private access key.
+- Support center and knowledge base.
+- Terms, privacy policy, and refund policy.
+
+Allow guest checkout without mandatory account registration where permitted by law and supplier policies.
+
+3. Advanced administrator dashboard
+
+Create a complete admin control center with functional navigation, CRUD operations, filtering, searching, pagination, and audit history.
+
+Admin modules:
+
+1. Overview and live analytics.
+2. Customer management.
+3. eSIM provisioning and generation.
+4. Telecom provider API management.
+5. Mobile network management.
+6. Data package management.
+7. Mobile phone number management.
+8. Voice and SMS management.
+9. Cryptocurrency payment management.
+10. Wallet and gateway configuration.
+11. eSIM recharge management.
+12. Orders, refunds, and invoices.
+13. Supplier inventory and wholesale costs.
+14. Pricing, discounts, and profit margins.
+15. Country coverage management.
+16. Automation and background jobs.
+17. Webhook management.
+18. Support ticket management.
+19. Staff roles and permissions.
+20. Security and audit logs.
+21. System settings and diagnostics.
+
+4. Real eSIM provisioning engine
+
+Create an advanced eSIM provisioning module.
+
+Admin must be able to:
+
+- Select telecom supplier.
+- Choose destination country and coverage region.
+- Choose available mobile network.
+- Select 4G, 5G, or supported network technology.
+- Select data allowance and validity.
+- Select data-only or voice/SMS service.
+- Request a real mobile phone number if supported.
+- Submit individual or bulk provisioning requests.
+- Import legitimately issued eSIM profiles.
+- Generate activation QR codes from real supplier-issued SM-DP+ credentials.
+- View ICCID, EID where available, IMSI metadata where authorized, and MSISDN.
+- Monitor activation status and data usage.
+- Recharge, suspend, or terminate service where supported.
+- Handle supplier failures, retries, and refunds.
+
+Never fabricate functional eSIM credentials, ICCIDs, phone numbers, network access, or successful activations.
+
+Provide a clearly labeled sandbox simulator for testing, separate from live provisioning.
+
+5. Telecom provider API settings
+
+Create Settings → Telecom Providers.
+
+Admin configuration must support:
+
+- Supplier name and API endpoint.
+- Sandbox and production environments.
+- API key, OAuth2, and supported authentication methods.
+- Secure credential storage.
+- Test Connection button.
+- Capability discovery.
+- Country and carrier coverage synchronization.
+- Data package synchronization.
+- Available phone number inventory.
+- eSIM provisioning.
+- Recharge and top-up.
+- Voice and SMS services.
+- Usage reporting.
+- Webhook registration.
+- API request logs.
+- Supplier health monitoring.
+- Automatic failover where contractually supported.
+
+Build a modular provider adapter architecture so new suppliers can be added without rewriting the platform.
+
+6. Advanced CryptoPay addon
+
+Build Settings → Crypto Payments with individual currency and network configurations.
+
+Support configurable payment adapters for:
+
+- Bitcoin (BTC).
+- Bitcoin Lightning.
+- Litecoin (LTC).
+- Bitcoin Cash (BCH).
+- Ethereum (ETH).
+- USDT on supported networks.
+- USDC on supported networks.
+- Dogecoin (DOGE).
+- TRON (TRX).
+- Solana (SOL).
+- BNB.
+- Monero (XMR), if a compliant, supported integration is available.
+
+Admin must be able to configure:
+
+- Enable/disable each cryptocurrency.
+- Payment gateway or self-hosted wallet adapter.
+- Receiving addresses and address derivation.
+- Network and token contract validation.
+- Minimum and maximum payment.
+- Confirmation thresholds.
+- Invoice expiration.
+- Exchange rate provider.
+- Pricing spread and processing fees.
+- Underpayments and overpayments.
+- Refund approval workflows.
+- Payment status and transaction history.
+- Webhook authentication and replay protection.
+- Payment reconciliation.
+- Treasury and settlement reporting.
+
+Integrate BTCPay Server for supported Bitcoin and Lightning functionality, with additional chain-specific adapters for other cryptocurrencies.
+
+Never store private wallet keys in plaintext or expose payment secrets to the frontend.
+
+Do not mark an invoice paid until independently verified through the configured payment provider or blockchain verification process.
+
+7. Cryptocurrency eSIM recharge
+
+Build a complete recharge system.
+
+Customer selects an existing eSIM, chooses a supported data top-up package, and pays using cryptocurrency.
+
+After payment verification:
+
+1. Confirm invoice settlement.
+2. Validate eSIM eligibility.
+3. Send an authenticated recharge request to the telecom supplier.
+4. Verify supplier acceptance.
+5. Update the customer's balance or package status.
+6. Record the transaction.
+7. Display confirmation and receipt.
+
+Implement idempotency, retry handling, duplicate-payment protection, and recovery from supplier failures.
+
+Never show a recharge as successful before supplier confirmation.
+
+8. Mobile phone numbers, voice and SMS
+
+Build an MSISDN management system with:
+
+- Country and number-type selection.
+- Authorized mobile number allocation.
+- Number assignment to supported eSIM profiles.
+- Number portability requests where available.
+- Voice and SMS package configuration.
+- Incoming/outgoing service status.
+- Number lifecycle management.
+- Number renewal and expiry.
+- Carrier provisioning logs.
+
+A phone number must only be issued through a legitimate telecom provider.
+
+Support supplier-specific identity verification requirements and country restrictions. Do not promise anonymous phone numbers in jurisdictions where identity verification is required.
+
+9. Privacy and security
+
+Design the platform around privacy by default.
+
+- Guest checkout.
+- Pseudonymous customer identifiers.
+- Minimal personal data collection.
+- Optional accounts.
+- Private order access tokens.
+- Encrypted sensitive records.
+- Secure admin sessions.
+- Multi-factor admin authentication.
+- Role-based access control.
+- Rate limiting.
+- CSRF and XSS protections.
+- Parameterized database queries.
+- Secure payment webhook validation.
+- Audit logging.
+- Configurable data retention.
+- Backup and restore controls.
+- Supplier-specific compliance rules.
+
+No routine customer ID collection where legally permitted, but support mandatory verification when required by local law, payment providers, or network operators.
+
+Do not market the service as untraceable or guarantee anonymity.
+
+10. Business management
+
+Implement:
+
+- Wholesale cost management.
+- Retail pricing and margins.
+- Country-based pricing.
+- Currency conversion.
+- Promo codes and discounts.
+- Supplier balance tracking.
+- Sales and revenue analytics.
+- Daily/monthly reporting.
+- Customer lifetime value.
+- Failed order reporting.
+- Supplier performance reporting.
+- Data usage reporting.
+- Inventory forecasting.
+- CSV export.
+- Invoice generation.
+
+11. Database and backend
+
+Use PostgreSQL with proper migrations.
+
+Create relational models for users, roles, customers, suppliers, supplier credentials, networks, coverage, data plans, eSIM profiles, phone numbers, orders, payments, blockchain transactions, recharges, provisioning jobs, usage records, invoices, settings, webhooks, and audit logs.
+
+Implement secure REST APIs, validation, structured errors, pagination, background processing, and transaction-safe state changes.
+
+Create OpenAPI documentation and integration tests.
+
+12. Automation engine
+
+Create background jobs for:
+
+- Payment verification.
+- eSIM provisioning.
+- Automatic delivery.
+- Recharge fulfillment.
+- Data usage synchronization.
+- Expiration notifications.
+- Supplier inventory synchronization.
+- Webhook retry processing.
+- Refund review.
+- Failed provisioning recovery.
+
+Use durable queues and idempotent job processing.
+
+13. Deployment requirements
+
+Build for Replit development and preview, with a portable architecture that can later deploy using Docker, VPS hosting, or Cloudflare Tunnel.
+
+I also operate other applications in Termux, so deployment must be configurable and avoid overwriting existing applications.
+
+Support:
+
+- PostgreSQL database.
+- Environment-based configuration.
+- Port 8090 for standalone Termux deployment.
+- Docker and Docker Compose.
+- Database migrations.
+- Health and readiness endpoints.
+- Secure secret management.
+- Automated backups.
+- Structured logging.
+- Production build scripts.
+- GitHub-ready repository.
+- README and deployment documentation.
+
+Never reset or destroy existing customer databases automatically.
+
+14. Testing and production readiness
+
+Create automated tests for authentication, admin permissions, checkout, payment state transitions, webhook signatures, replay protection, supplier provisioning, recharge idempotency, and database migrations.
+
+Provide separate sandbox and live modes.
+
+Show an integration status dashboard that identifies:
+
+- Fully operational features.
+- Simulated features.
+- Features requiring API credentials.
+- Features awaiting supplier approval.
+- Failed integrations.
+
+Do not display mock data as real live telecom data.
+
+15. Final deliverables
+
+Build the actual web application, not just a design.
+
+Deliver a functional customer storefront, complete admin dashboard, PostgreSQL backend, telecom provider integration framework, cryptocurrency payment adapter framework, eSIM provisioning workflow, recharge workflow, mobile number management, tests, documentation, and deployment configuration.
+
+Create realistic demonstration data only for sandbox mode.
+
+Prioritize a beautiful working interface and secure end-to-end workflows. Implement in stages, validate each stage, and never claim that real eSIM issuance or cryptocurrency settlement works without successful integration testing against authorized providers.
+
+Start by building the complete application foundation, customer storefront, admin dashboard, database, and core API. Then implement payment and telecom integration modules with clear sandbox/live separation.

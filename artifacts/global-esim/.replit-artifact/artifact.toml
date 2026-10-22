@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Global eSIM Privacy Pro"
+description = "A privacy-first international connectivity platform for browsing and managing eSIM data plans, customer orders, and verified telecom integrations, with sandbox and live modes kept distinct."
+version = "1.0.0"
+id = "artifacts/global-esim"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22745
+
+[services.development]
+run = "pnpm --filter @workspace/global-esim run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/global-esim", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/global-esim/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22745"
+BASE_PATH = "/"

@@ -10,6 +10,14 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: catalog
+    description: Public eSIM catalog and coverage
+  - name: orders
+    description: Guest checkout and private order lookup
+  - name: admin
+    description: Authenticated administrator operations
+  - name: integrations
+    description: Telecom and payment connection readiness
 paths:
   /healthz:
     get:
@@ -24,6 +32,217 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /plans:
+    get:
+      operationId: listPlans
+      tags: [catalog]
+      summary: List available eSIM data plans
+      parameters:
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Plans available in the current operating mode
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plan"
+  /coverage:
+    get:
+      operationId: listCoverage
+      tags: [catalog]
+      summary: List destination coverage
+      responses:
+        "200":
+          description: Coverage summary
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Coverage"
+  /orders:
+    post:
+      operationId: createOrder
+      tags: [orders]
+      summary: Create a sandbox order
+      description: Creates a clearly labeled sandbox order; it never provisions a real eSIM.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderInput"
+      responses:
+        "201":
+          description: Sandbox order and one-time private lookup key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderCreated"
+        "400":
+          description: Invalid plan or checkout input
+  /orders/lookup:
+    get:
+      operationId: lookupOrder
+      tags: [orders]
+      summary: Look up an order using its private access key
+      parameters:
+        - name: accessKey
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Private order summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          description: No order matches this access key
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [admin]
+      summary: Get administrator dashboard metrics
+      responses:
+        "200":
+          description: Sandbox business metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+  /admin/plans:
+    get:
+      operationId: listAdminPlans
+      tags: [admin]
+      summary: List plans for administration
+      responses:
+        "200":
+          description: Plan catalog
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Plan"
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+    post:
+      operationId: createPlan
+      tags: [admin]
+      summary: Create a sandbox data plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlanInput"
+      responses:
+        "201":
+          description: Created plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plan"
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+  /admin/plans/{id}:
+    patch:
+      operationId: updatePlan
+      tags: [admin]
+      summary: Update a sandbox data plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlanUpdate"
+      responses:
+        "200":
+          description: Updated plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Plan"
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+        "404":
+          description: Plan not found
+    delete:
+      operationId: deletePlan
+      tags: [admin]
+      summary: Delete a sandbox data plan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Plan deleted
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+        "404":
+          description: Plan not found
+  /admin/orders:
+    get:
+      operationId: listAdminOrders
+      tags: [admin]
+      summary: List recent orders for administration
+      responses:
+        "200":
+          description: Recent orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "401":
+          description: Sign-in required
+        "403":
+          description: Administrator role required
+  /integrations/status:
+    get:
+      operationId: getIntegrationStatus
+      tags: [integrations]
+      summary: Show verified integration readiness
+      responses:
+        "200":
+          description: Provider readiness; unavailable capabilities are never represented as live
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/IntegrationStatus"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +252,104 @@ components:
           type: string
       required:
         - status
+    Plan:
+      type: object
+      required: [id, name, countryCode, countryName, regionType, dataMb, validityDays, priceCents, currency, serviceType, network, status, mode]
+      properties:
+        id: { type: integer }
+        name: { type: string }
+        countryCode: { type: ["string", "null"] }
+        countryName: { type: string }
+        regionType: { type: string }
+        dataMb: { type: integer }
+        validityDays: { type: integer }
+        priceCents: { type: integer }
+        currency: { type: string }
+        serviceType: { type: string }
+        network: { type: string }
+        status: { type: string }
+        mode: { type: string }
+    PlanInput:
+      type: object
+      required: [name, countryCode, countryName, regionType, dataMb, validityDays, priceCents, serviceType, network]
+      properties:
+        name: { type: string, minLength: 2, maxLength: 100 }
+        countryCode: { type: ["string", "null"] }
+        countryName: { type: string, minLength: 2, maxLength: 100 }
+        regionType: { type: string, enum: [country, regional, global] }
+        dataMb: { type: integer, minimum: 100 }
+        validityDays: { type: integer, minimum: 1 }
+        priceCents: { type: integer, minimum: 0 }
+        serviceType: { type: string, enum: [data, data_voice_sms] }
+        network: { type: string, maxLength: 120 }
+    PlanUpdate:
+      type: object
+      properties:
+        name: { type: string, minLength: 2, maxLength: 100 }
+        countryCode: { type: ["string", "null"] }
+        countryName: { type: string, minLength: 2, maxLength: 100 }
+        regionType: { type: string, enum: [country, regional, global] }
+        dataMb: { type: integer, minimum: 100 }
+        validityDays: { type: integer, minimum: 1 }
+        priceCents: { type: integer, minimum: 0 }
+        serviceType: { type: string, enum: [data, data_voice_sms] }
+        network: { type: string, maxLength: 120 }
+        status: { type: string, enum: [active, hidden] }
+    Coverage:
+      type: object
+      required: [countryCode, countryName, region, planCount]
+      properties:
+        countryCode: { type: string }
+        countryName: { type: string }
+        region: { type: string }
+        planCount: { type: integer }
+    OrderInput:
+      type: object
+      required: [planId]
+      properties:
+        planId: { type: integer }
+        email: { type: ["string", "null"], format: email }
+    OrderCreated:
+      type: object
+      required: [order, accessKey, mode]
+      properties:
+        order: { $ref: "#/components/schemas/Order" }
+        accessKey: { type: string }
+        mode: { type: string, enum: [sandbox] }
+    Order:
+      type: object
+      required: [id, planId, planName, status, paymentStatus, provisioningStatus, amountCents, currency, mode, createdAt]
+      properties:
+        id: { type: string }
+        planId: { type: integer }
+        planName: { type: string }
+        status: { type: string }
+        paymentStatus: { type: string }
+        provisioningStatus: { type: string }
+        amountCents: { type: integer }
+        currency: { type: string }
+        mode: { type: string }
+        createdAt: { type: string, format: date-time }
+    DashboardSummary:
+      type: object
+      required: [mode, orderCount, activePlans, sandboxOrderValueCents, integrationCount, recentOrders]
+      properties:
+        mode: { type: string, enum: [sandbox] }
+        orderCount: { type: integer }
+        activePlans: { type: integer }
+        sandboxOrderValueCents: { type: integer }
+        integrationCount: { type: integer }
+        recentOrders:
+          type: array
+          items: { $ref: "#/components/schemas/Order" }
+    IntegrationStatus:
+      type: object
+      required: [id, name, category, status, mode, detail]
+      properties:
+        id: { type: string }
+        name: { type: string }
+        category: { type: string }
+        status: { type: string, enum: [not_configured, sandbox_only, awaiting_provider, verified] }
+        mode: { type: string }
+        detail: { type: string }
 
