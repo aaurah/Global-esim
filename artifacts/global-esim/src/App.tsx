@@ -17,6 +17,7 @@ import {
 import type { Plan, PlanInput, PlanUpdate } from '@workspace/api-client-react';
 import { Link, Route, Switch, Router as WouterRouter, useLocation } from 'wouter';
 import NotFound from '@/pages/not-found';
+import DeviceCheckerPage from '@/pages/device-checker';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -107,6 +108,7 @@ function StoreHeader() {
     <div className="header-inner"><Brand />
       <nav className={`main-nav ${mobile ? 'nav-open' : ''}`}>
         <Link href="/plans" data-testid="link-plans">Explore plans</Link>
+        <Link href="/device-checker" data-testid="link-device-checker">Device check</Link>
         <Link href="/order-lookup" data-testid="link-order-lookup">Order lookup</Link>
         <a href="#how-it-works">How it works</a>
       </nav>
@@ -120,7 +122,7 @@ function StoreHeader() {
 }
 
 function Footer() {
-  return <footer className="site-footer"><Brand /><p>Connectivity, with the details in the open.</p><div className="footer-links"><Link href="/plans">Browse plans</Link><Link href="/order-lookup">Order lookup</Link><Link href="/sign-in">Operator sign in</Link></div><span>© 2025 Global eSIM Privacy Pro · Sandbox experience</span></footer>;
+  return <footer className="site-footer"><Brand /><p>Connectivity, with the details in the open.</p><div className="footer-links"><Link href="/plans">Browse plans</Link><Link href="/device-checker">Device checker</Link><Link href="/order-lookup">Order lookup</Link><Link href="/sign-in">Operator sign in</Link></div><span>© 2025 Global eSIM Privacy Pro · Sandbox experience</span></footer>;
 }
 function StoreLayout({ children }: { children: React.ReactNode }) {
   return <><StoreHeader /><main>{children}</main><Footer /></>;
@@ -354,6 +356,7 @@ function ClerkRoutes() {
     <Switch>
       <Route path="/" component={HomeRedirect} />
       <Route path="/plans" component={PlansPage} />
+      <Route path="/device-checker"><StoreLayout><DeviceCheckerPage /></StoreLayout></Route>
       <Route path="/order-lookup" component={OrderLookupPage} />
       <Route path="/dashboard"><AdminGate><DashboardPage /></AdminGate></Route>
       <Route path="/admin/plans"><AdminGate><PlansAdminPage /></AdminGate></Route>
@@ -369,6 +372,7 @@ function ClerkUnavailableRoutes() {
   return <Switch>
     <Route path="/" component={HomeRedirect} />
     <Route path="/plans" component={PlansPage} />
+    <Route path="/device-checker"><StoreLayout><DeviceCheckerPage /></StoreLayout></Route>
     <Route path="/order-lookup" component={OrderLookupPage} />
     <Route path="/dashboard"><UnavailableAdmin><DashboardPage /></UnavailableAdmin></Route>
     <Route path="/admin/plans"><UnavailableAdmin><PlansAdminPage /></UnavailableAdmin></Route>
